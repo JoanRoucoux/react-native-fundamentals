@@ -2,13 +2,18 @@ import React from 'react';
 import { StyleSheet, Text, View, Alert, TouchableOpacity } from 'react-native';
 
 export class Menu extends React.Component {
-  onPress = () => {};
+  onPress = () => {
+    Alert.alert('You pressed the button!');
+  };
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.buttonRow}>
-          <TouchableOpacity style={styles.buttonStyles} onPress={this.onPress}>
+          <TouchableOpacity
+            style={styles.buttonStyles}
+            onPress={() => this.props.navigate('Lessons')}
+          >
             <Text style={styles.buttonText}>LESSONS</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonStyles} onPress={this.onPress}>

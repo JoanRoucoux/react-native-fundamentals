@@ -18,6 +18,7 @@
 .env.test.local
 .env.production.local
 .vscode/settings.json
+.expo/*
 
 # Optional eslint cache
 .eslintcache
