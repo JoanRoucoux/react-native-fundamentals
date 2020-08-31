@@ -6,6 +6,7 @@ import { Contact } from './app/views/Contact.js';
 import { Video } from './app/views/Video.js';
 import { VideoDetails } from './app/views/VideoDetails.js';
 import { Register } from './app/views/Register.js';
+import { Login } from './app/views/Login.js';
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ const MyStack = () => {
       <Stack.Screen name="Lessons" component={Video} />
       <Stack.Screen name="VideoDetails" component={VideoDetails} />
       <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="Login" component={Login} />
     </Stack.Navigator>
   );
 };

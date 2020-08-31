@@ -9,7 +9,7 @@ import {
   AsyncStorage,
 } from 'react-native';
 
-export class Register extends React.Component {
+export class Login extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -17,32 +17,42 @@ export class Register extends React.Component {
   state = {
     username: '',
     passwrd: '',
-    passwrdConfirm: '',
   };
 
-  cancelRegister = () => {
-    Alert.alert('Registration cancelled');
+  cancelLogin = () => {
+    Alert.alert('Login cancelled');
     this.props.navigation.navigate('Home');
   };
 
-  registerAccount = () => {
+  loginUser = () => {
     if (!this.state.username) {
       Alert.alert('Please enter a username');
-    } else if (this.state.passwrd !== this.state.passwrdConfirm) {
-      Alert.alert('Passwords do not match');
+    } else if (!this.state.passwrd) {
+      Alert.alert('Please enter a password');
     } else {
-      AsyncStorage.getItem(this.state.username, (err, result) => {
-        if (result !== null) {
-          Alert.alert(`${this.state.username} already exists`);
+      AsyncStorage.getItem('userLoggedIn', (err, result) => {
+        if (result !== 'none') {
+          Alert.alert('Someone already logged on');
+          this.props.navigation.navigate('Home');
         } else {
-          AsyncStorage.setItem(
-            this.state.username,
-            this.state.passwrd,
-            (err, result) => {
-              Alert.alert(`${this.state.username} account created`);
-              this.props.navigation.navigate('Home');
+          AsyncStorage.getItem(this.state.username, (err, result) => {
+            if (result !== null) {
+              if (result !== this.state.passwrd) {
+                Alert.alert('Password incorrect');
+              } else {
+                AsyncStorage.setItem(
+                  'userLoggedIn',
+                  this.state.username,
+                  (err, result) => {
+                    Alert.alert(`${this.state.username} Logged in`);
+                    this.props.navigation.navigate('Home');
+                  }
+                );
+              }
+            } else {
+              Alert.alert(`No account for ${this.state.username}`);
             }
-          );
+          });
         }
       });
     }
@@ -51,7 +61,7 @@ export class Register extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.heading}>Register Account</Text>
+        <Text style={styles.heading}>Login</Text>
         <TextInput
           style={styles.inputs}
           onChangeText={(text) => this.setState({ username: text })}
@@ -65,23 +75,10 @@ export class Register extends React.Component {
           secureTextEntry={true}
         />
         <Text style={styles.label}>Enter Password</Text>
-        <TextInput
-          style={styles.inputs}
-          onChangeText={(text) => this.setState({ passwrdConfirm: text })}
-          value={this.state.passwrdConfirm}
-          secureTextEntry={true}
-        />
-        <Text style={styles.label}>Confirm Password</Text>
-        <TouchableHighlight
-          onPress={this.registerAccount}
-          underlayColor="#31e981"
-        >
-          <Text style={styles.buttons}>Register</Text>
+        <TouchableHighlight onPress={this.loginUser} underlayColor="#31e981">
+          <Text style={styles.buttons}>Login</Text>
         </TouchableHighlight>
-        <TouchableHighlight
-          onPress={this.cancelRegister}
-          underlayColor="#31e981"
-        >
+        <TouchableHighlight onPress={this.cancelLogin} underlayColor="#31e981">
           <Text style={styles.buttons}>Cancel</Text>
         </TouchableHighlight>
       </View>
