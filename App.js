@@ -9,6 +9,7 @@ import { Register } from './app/views/Register.js';
 import { Login } from './app/views/Login.js';
 import { Quiz } from './app/views/Quiz.js';
 import { Finish } from './app/views/QuizFinish.js';
+import { About } from './app/views/About.js';
 
 const Stack = createStackNavigator();
 
@@ -23,6 +24,7 @@ const MyStack = () => {
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Quiz" component={Quiz} />
       <Stack.Screen name="Finish" component={Finish} />
+      <Stack.Screen name="About" component={About} />
     </Stack.Navigator>
   );
 };
